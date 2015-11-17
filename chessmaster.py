@@ -156,10 +156,7 @@ class King(ChessPiece):
         new_pos = self.algebraic_to_numeric(position)
         comp_1 = (abs(new_pos[0] - cur_pos[0]) <= 1
                   and abs(cur_pos[1] - cur_pos[1] <= 1)
-        if comp_1:
-            return True
-        else:
-            return False
+        return comp_1
 
 
 class ChessMatch(ChessPiece):
