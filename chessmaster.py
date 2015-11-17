@@ -144,7 +144,7 @@ class King(ChessPiece):
     prefix = 'K'
 
     def is_legal_move(self, position):
-        """Finds out whether Bishop move is legal.
+        """Finds out whether King move is legal.
 
         Args:
             position(string): position to be tested.
@@ -154,12 +154,12 @@ class King(ChessPiece):
         """
         cur_pos = self.algebraic_to_numeric(self.position)
         new_pos = self.algebraic_to_numeric(position)
-        move_1 = cur_pos[0] + 1 and cur_pos[1] + 1
-        move_2 = cur_pos[0] + 1 or cur_pos[1] + 1
-        if not move_1 and move_2:
-            return False
-        else:
+        comp_1 = abs(new_pos[0] - cur_pos[0]) <= 1
+                 and abs(cur_pos[1] - cur_pos[1] <= 1
+        if comp_1:
             return True
+        else:
+            return False
 
 
 class ChessMatch(ChessPiece):
