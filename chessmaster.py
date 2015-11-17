@@ -7,10 +7,13 @@ import time
 
 
 class ChessPiece(object):
-    """Class defining chess piece"""
+    """Class defining chess piece
 
+    Attributes:
+        prefix(str): a string with default ''.
+    """
     prefix = ''
-    
+
     def __init__(self, position):
         """Constructor
 
@@ -36,7 +39,7 @@ class ChessPiece(object):
         Return:
             Mixed: Returns a tuple or None.
         """
-        self.tile = tile
+        tile = ''
         letters = 'abcdefgh'
         numbers = range(1, 9)
         if (tile[0] in letters) and (int(tile[1]) in numbers):
@@ -45,7 +48,7 @@ class ChessPiece(object):
             return (l_position, num_position)
         else:
             return None
-                
+
     def is_legal_move(self, position):
         """testing whether given chess piece location is on the chess board.
 
@@ -58,8 +61,8 @@ class ChessPiece(object):
         if not self.algebraic_to_numeric(position):
             return False
         else:
-            return True         
-            
+            return True
+
     def move(self, position):
         """Moving chess piece.
 
@@ -69,7 +72,6 @@ class ChessPiece(object):
         Returns:
             a tuple.
         """
-        
         if self.is_legal_move(position):
             oldposition = self.prefix + self.position
             newposition = self.prefix + position
@@ -91,10 +93,6 @@ class Rook(ChessPiece):
 
     prefix = 'R'
 
-    def __init__(self, position):
-        """Class constructor"""
-        ChessPiece.__init__(self, position)
-
     def is_legal_move(self, position):
         """Finds out whether Rook move is legal.
 
@@ -108,10 +106,11 @@ class Rook(ChessPiece):
         new_pos = self.algebraic_to_numeric(position)
         compare1 = cur_pos[0] == new_pos[0] and cur_pos[1] != new_pos[1]
         compare2 = cur_pos[0] != new_pos[0] and cur_pos[1] == new_pos[1]
-        if compare1 or compare2:
+        if compare1 or compare2 or cur_pos == new_pos:
             return True
         else:
             return False
+
 
 class Bishop(ChessPiece):
     """Bishop Chess piece
@@ -119,9 +118,8 @@ class Bishop(ChessPiece):
     Attribute:
         prefix(str): a string with a default R.
     """
-    
     prefix = 'B'
-    
+
     def is_legal_move(self, position):
         """Finds out whether Bishop move is legal.
 
@@ -131,20 +129,18 @@ class Bishop(ChessPiece):
         Returns:
             Boolean: True if move is legal, if not False.
         """
-        
         cur_pos = self.algebraic_to_numeric(self.position)
         new_pos = self.algebraic_to_numeric(position)
-        pos_1 = (cur_pos[0] - new_pos[0]) == (cur_pos[1] - new_pos[1])
-        pos_2 = (cur_pos[0] + new_pos[0]) == (cur_pos[1] + new_pos[1])
-        timestamp = time.time()
+        pos_1 = abs(cur_pos[0] - new_pos[0]) == abs(cur_pos[1] - new_pos[1])
+        pos_2 = abs(cur_pos[0] + new_pos[0]) == abs(cur_pos[1] + new_pos[1])
         if pos_1 or pos_2:
             return True
         else:
             return False
 
+
 class King(ChessPiece):
     """King chess piece"""
-    
     prefix = 'K'
 
     def is_legal_move(self, position):
@@ -156,26 +152,28 @@ class King(ChessPiece):
         Returns:
             Boolean: True if move is legal, if not False.
         """
-        
         cur_pos = self.algebraic_to_numeric(self.position)
         new_pos = self.algebraic_to_numeric(position)
         move_1 = cur_pos[0] + 1 and cur_pos[1] + 1
         move_2 = cur_pos[0] + 1 or cur_pos[1] + 1
-        timestamp = time.time()
         if not move_1 and move_2:
             return False
         else:
             return True
 
+
 class ChessMatch(ChessPiece):
     """Chess match class"""
     def __init__(self, pieces=None):
+        """ChessMatch constructor"""
         self.log = []
         if pieces is not None:
             self.pieces = pieces
         else:
             self.reset()
+
     def reset(self):
+        """Reseting chess position"""
         self.pieces = {'Ra1': Rook('a1'),
                        'Rh1': Rook('h1'),
                        'Ra8': Rook('a8'),
@@ -191,7 +189,6 @@ class ChessMatch(ChessPiece):
 
     def move(self, piece, position):
         """moving position of chess piece in chess game"""
-        ChessPiece.move.__init__(self)
         if piece in self.pieces:
             chesspiece = self.pieces[piece]
             moved = chesspiece.move(position)
