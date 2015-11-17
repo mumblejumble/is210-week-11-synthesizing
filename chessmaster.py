@@ -39,7 +39,7 @@ class ChessPiece(object):
         Return:
             Mixed: Returns a tuple or None.
         """
-        tile = ''
+        self.tile = tile
         letters = 'abcdefgh'
         numbers = range(1, 9)
         if (tile[0] in letters) and (int(tile[1]) in numbers):
