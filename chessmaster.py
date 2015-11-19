@@ -155,7 +155,7 @@ class King(ChessPiece):
         cur_pos = self.algebraic_to_numeric(self.position)
         new_pos = self.algebraic_to_numeric(position)
         if (abs(new_pos[0] - cur_pos[0]) <= 1)\
-           or (abs(new_pos[1] - cur_pos[1]) <= 1):
+           and (abs(new_pos[1] - cur_pos[1]) <= 1):
             return True
         else:
             return False
