@@ -30,7 +30,7 @@ class ChessPiece(object):
             excep = '`{}` is not a legal start position'
             raise ValueError(excep.format(position))
 
-    def algebraic_to_numeric(self, tile):
+    def algebraic_to_numeric(self, tile=''):
         """finds a algebraic location in tuples for given chess piece.
 
         Args:
@@ -39,7 +39,6 @@ class ChessPiece(object):
         Return:
             Mixed: Returns a tuple or None.
         """
-        self.tile = tile
         letters = 'abcdefgh'
         numbers = range(1, 9)
         if (tile[0] in letters) and (int(tile[1]) in numbers):
@@ -161,7 +160,7 @@ class King(ChessPiece):
             return False
 
 
-class ChessMatch(ChessPiece):
+class ChessMatch(object):
     """Chess match class"""
     def __init__(self, pieces=None):
         """ChessMatch constructor"""
